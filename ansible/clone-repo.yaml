@@ -1,13 +1,14 @@
 ---
-    hosts: all
-    tasks:
-        - name: Clone a github repository
-            git:
-                repo: https://github.com/asabhi6776/minecraft_server.git
-                dest: /opt/repos
-                clone: yes
-                update: yes
-                - name: Transfer the script
-                        copy: src=./script.sh dest=/opt/repos mode=0777
-                - name: Execute the script
-                        command: sh /opt/repos/script.sh
+ - hosts: all
+   tasks:
+   - name: Clone a github repository
+     git:
+       repo: https://github.com/sqlite/sqlite.git
+       dest: /home/debian/repos/
+       clone: yes
+       update: yes
+       
+   - name: Transfer the script
+     copy: src=./script.sh dest=/opt/repos mode=0777
+   - name: Execute the script
+     command: sh /opt/repos/script.sh
