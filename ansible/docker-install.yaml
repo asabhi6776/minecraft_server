@@ -54,7 +54,7 @@
         enabled: yes
       become: yes
 
-    - name: Add user vagrant to docker group
+    - name: Add user manager to docker group
       user:
         name: manager
         groups: docker
