@@ -3,8 +3,8 @@
    tasks:
    - name: Clone a github repository
      git:
-       repo: https://github.com/sqlite/sqlite.git
-       dest: /home/debian/repos/
+       repo: https://github.com/asabhi6776/minecraft_server.git
+       dest: /opt/repos/
        clone: yes
        update: yes
        
