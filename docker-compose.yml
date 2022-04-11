@@ -1,12 +1,12 @@
 version: "3.3"
 services:
     minetest:
-        image: asabhi6776/minecraft:1.0.1
+        image: asabhi6776/minecraft:1.1.1
         container_name: mineops_beta
-        restart: unless-stopped
         environment:
-            - TZ=Asia/Kolkata
+        - TZ=Asia/Kolkata
         # volumes:
-            # - ./data:/minecraft
+        # - ~/Templates/minecraft-server/data:/minecraft
         ports:
-            - 25565:25565
+        - 25565:25565
+        restart: unless-stopped
