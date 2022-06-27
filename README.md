@@ -19,3 +19,11 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 
 # Thanks
+
+## [![Repography logo](https://images.repography.com/logo.svg)](https://repography.com) / Recent activity [![Time period](https://images.repography.com/26893212/asabhi6776/minecraft_server/recent-activity/42c486b5cfab74ddb8d0fae14ae0456d_badge.svg)](https://repography.com)
+[![Timeline graph](https://images.repography.com/26893212/asabhi6776/minecraft_server/recent-activity/42c486b5cfab74ddb8d0fae14ae0456d_timeline.svg)](https://github.com/asabhi6776/minecraft_server/commits)
+[![Issue status graph](https://images.repography.com/26893212/asabhi6776/minecraft_server/recent-activity/42c486b5cfab74ddb8d0fae14ae0456d_issues.svg)](https://github.com/asabhi6776/minecraft_server/issues)
+[![Pull request status graph](https://images.repography.com/26893212/asabhi6776/minecraft_server/recent-activity/42c486b5cfab74ddb8d0fae14ae0456d_prs.svg)](https://github.com/asabhi6776/minecraft_server/pulls)
+[![Trending topics](https://images.repography.com/26893212/asabhi6776/minecraft_server/recent-activity/42c486b5cfab74ddb8d0fae14ae0456d_words.svg)](https://github.com/asabhi6776/minecraft_server/commits)
+[![Top contributors](https://images.repography.com/26893212/asabhi6776/minecraft_server/recent-activity/42c486b5cfab74ddb8d0fae14ae0456d_users.svg)](https://github.com/asabhi6776/minecraft_server/graphs/contributors)
+
