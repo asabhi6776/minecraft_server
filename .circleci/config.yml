@@ -1,0 +1,20 @@
+version: 2.1
+
+jobs:
+ build:
+   machine:
+    image: ubuntu-2204:2022.04.2
+   steps:
+     - checkout
+     # start proprietary DB using private Docker image
+     # with credentials stored in the UI
+     - run: |
+         echo $HUB_PASSWORD | docker login --username $HUB_USERNAME --password-stdin
+   #      docker run -d --name db company/proprietary-db:1.2.3
+
+     # build the application image
+     - run: docker build -t asabhi6776/minecraft:$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM .
+    # - run: docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t asabhi6776/node_api_monitor:$CIRCLE_BRANCH --push .
+
+     # deploy the image
+     - run: docker push asabhi6776/minecraft:$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
