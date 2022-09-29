@@ -15,7 +15,7 @@ jobs:
      # build the application image
      - run: docker build -t asabhi6776/minecraft:"amd64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --build-arg ARCH=amd64/ .
      - run: docker push asabhi6776/minecraft:"amd64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
-     - run: docker build -t asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --build-arg ARCH=arm64v8/ .
+     - run: docker buildx build --platform=linux/arm64 -t asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --build-arg ARCH=arm64v8/ .
      - run: docker push asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
      - run: docker manifest create asabhi6776/minecraft:"multiarch"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --amend asabhi6776/minecraft:"amd64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --amend asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
      - run: docker manifest push asabhi6776/minecraft:"multiarch"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
