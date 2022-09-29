@@ -1,34 +1,53 @@
+# version: 2.1
+
+# jobs:
+#  build:
+#    machine:
+#     image: ubuntu-2004:202101-01 #ubuntu-2204:2022.04.2
+#    resource_class: arm.medium
+#    steps:
+#      - checkout
+#      # start proprietary DB using private Docker image
+#      # with credentials stored in the UI
+#      - run: |
+#          echo $HUB_PASSWORD | docker login --username $HUB_USERNAME --password-stdin
+#    #      docker run -d --name db company/proprietary-db:1.2.3
+
+#      # build the application image
+#      - run: docker build -t asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --build-arg ARCH=arm64v8/ .
+#      - run: docker push asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
+
 version: 2.1
-
+commands:
+  setup:
+    steps:
+      - checkout
+      - run:
+          name: setup Qemu
+          command: |
+            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+      - run:
+          name: Create builder
+          command: |
+            export DOCKER_CLI_EXPERIMENTAL=enabled
+            docker context create multi-arch-build
+            docker buildx create --use multi-arch-build
 jobs:
- build:
-   machine:
-    image: ubuntu-2004:202101-01 #ubuntu-2204:2022.04.2
-   resource_class: arm.medium
-   steps:
-     - checkout
-     # start proprietary DB using private Docker image
-     # with credentials stored in the UI
-     - run: |
-         echo $HUB_PASSWORD | docker login --username $HUB_USERNAME --password-stdin
-   #      docker run -d --name db company/proprietary-db:1.2.3
-
-     # build the application image
-     - run: docker build -t asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --build-arg ARCH=arm64v8/ .
-     - run: docker push asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
-jobs: 
- amd64:
-   machine: 
-    image: ubuntu-2204:2022.04.2
-   steps:
-     - checkout
-     # start proprietary DB using private Docker image
-     # with credentials stored in the UI
-     - run: |
-         echo $HUB_PASSWORD | docker login --username $HUB_USERNAME --password-stdin
-     - run: docker build -t asabhi6776/minecraft:"amd64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --build-arg ARCH=amd64/ .
-     - run: docker push asabhi6776/minecraft:"amd64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM   
-     - run: docker pull asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
-     - run: docker manifest create asabhi6776/minecraft:"multiarch"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --amend asabhi6776/minecraft:"amd64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --amend asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
-     - run: docker manifest push asabhi6776/minecraft:"multiarch"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
-   
+  build:
+    machine:
+      image: ubuntu-2004:202010-01
+    steps:
+      - setup
+      - run:
+          name: Login to image registry
+          command: |
+            echo $HUB_PASSWORD | docker login --username $HUB_USERNAME --password-stdin
+      - run:
+          name: Build multiarch docker image and push
+          command: |
+            DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --push --platform linux/ppc64le,linux/s390x,linux/arm64,linux/amd64 -t asabhi6776/minecraft:"multiarch_"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM .
+workflows:
+  version: 2.1
+  build-and-push-multi-arch-image:
+    jobs:
+      - build
