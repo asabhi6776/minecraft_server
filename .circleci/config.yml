@@ -16,6 +16,7 @@ jobs:
      # build the application image
      - run: docker build -t asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --build-arg ARCH=arm64v8/ .
      - run: docker push asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
+jobs: 
  amd64:
    machine: 
     image: ubuntu-2204:2022.04.2
