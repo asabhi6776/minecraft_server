@@ -14,10 +14,18 @@ jobs:
    #      docker run -d --name db company/proprietary-db:1.2.3
 
      # build the application image
-     - run: docker build -t asabhi6776/minecraft:"amd64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --build-arg ARCH=amd64/ .
-     - run: docker push asabhi6776/minecraft:"amd64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
      - run: docker build -t asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --build-arg ARCH=arm64v8/ .
      - run: docker push asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
+   resource_class: medium
+   steps:
+     - checkout
+     # start proprietary DB using private Docker image
+     # with credentials stored in the UI
+     - run: |
+         echo $HUB_PASSWORD | docker login --username $HUB_USERNAME --password-stdin
+     - run: docker build -t asabhi6776/minecraft:"amd64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --build-arg ARCH=amd64/ .
+     - run: docker push asabhi6776/minecraft:"amd64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM   
+     - run: docker pull asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
      - run: docker manifest create asabhi6776/minecraft:"multiarch"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --amend asabhi6776/minecraft:"amd64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --amend asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
      - run: docker manifest push asabhi6776/minecraft:"multiarch"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
    
