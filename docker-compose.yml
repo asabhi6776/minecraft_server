@@ -1,7 +1,7 @@
 version: "3.3"
 services:
     minetest:
-        image: asabhi6776/minecraft:persist_storage_1.0.4
+        image: asabhi6776/minecraft:multiarch_persist_storage_15
         container_name: mineops_beta
         environment:
         - TZ=Asia/Kolkata

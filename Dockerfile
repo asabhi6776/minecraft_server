@@ -1,5 +1,3 @@
-
-# FROM ${ARCH}
 FROM openjdk:17.0.1-jdk-oraclelinux8
 
 LABEL maintainer="asabhi6776"

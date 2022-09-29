@@ -1,22 +1,3 @@
-# version: 2.1
-
-# jobs:
-#  build:
-#    machine:
-#     image: ubuntu-2004:202101-01 #ubuntu-2204:2022.04.2
-#    resource_class: arm.medium
-#    steps:
-#      - checkout
-#      # start proprietary DB using private Docker image
-#      # with credentials stored in the UI
-#      - run: |
-#          echo $HUB_PASSWORD | docker login --username $HUB_USERNAME --password-stdin
-#    #      docker run -d --name db company/proprietary-db:1.2.3
-
-#      # build the application image
-#      - run: docker build -t asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --build-arg ARCH=arm64v8/ .
-#      - run: docker push asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
-
 version: 2.1
 commands:
   setup:
