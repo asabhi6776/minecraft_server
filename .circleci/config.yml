@@ -16,7 +16,8 @@ jobs:
      # build the application image
      - run: docker build -t asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM --build-arg ARCH=arm64v8/ .
      - run: docker push asabhi6776/minecraft:"arm64"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
-   resource_class: medium
+   machine: 
+    image: ubuntu-2204:2022.04.2
    steps:
      - checkout
      # start proprietary DB using private Docker image
