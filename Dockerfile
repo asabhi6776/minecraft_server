@@ -1,4 +1,6 @@
-FROM openjdk:17.0.1-jdk-oraclelinux8
+ARG ARCH=
+
+FROM ${ARCH}openjdk:17.0.1-jdk-oraclelinux8
 
 LABEL maintainer="asabhi6776"
 
