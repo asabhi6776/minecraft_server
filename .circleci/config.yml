@@ -27,10 +27,6 @@ jobs:
           name: Build multiarch docker image and push
           command: |
             DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --push --platform linux/arm64/v8,linux/amd64 -t asabhi6776/minecraft:"multiarch_"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM -t asabhi6776/minecraft:latest .
-      - run:
-          name: Push latest tag
-          command: |
-            docker push asabhi6776/minecraft:latest
 workflows:
   version: 2.1
   build-and-push-multi-arch-image:
