@@ -26,15 +26,7 @@ jobs:
       - run:
           name: Build multiarch docker image and push
           command: |
-            DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --push --platform linux/arm64/v8,linux/amd64 -t asabhi6776/minecraft:"multiarch_"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM .
-      - run:
-          name: pulling image
-          command: |
-            docker pull asabhi6776/minecraft:"multiarch_"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM
-      - run:
-          name: Tagging latest image
-          command: |
-            docker tag asabhi6776/minecraft:"multiarch_"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM asabhi6776/minecraft:latest
+            DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --push --platform linux/arm64/v8,linux/amd64 -t asabhi6776/minecraft:"multiarch_"$CIRCLE_BRANCH"_"$CIRCLE_BUILD_NUM asabhi6776/minecraft:latest .
       - run:
           name: Push latest tag
           command: |
