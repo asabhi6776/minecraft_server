@@ -1,0 +1,2 @@
+[hosts]
+mineone ansible_host=172.16.0.177 ansible_ssh_user=root
