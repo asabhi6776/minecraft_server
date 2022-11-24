@@ -16,7 +16,7 @@ else
     echo "going to start the container."
 fi
 
-
+# this is demo
 
 cd /opt/repos
 docker-compose up -d
