@@ -1,0 +1,28 @@
+version: "3.3"
+services:
+    minetest:
+        image: asabhi6776/minecraft:latest
+        container_name: "{{ container_name }}"
+        environment:
+        - TZ=Asia/Kolkata
+        working_dir: /minecraft
+        env_file:
+         - .env
+        entrypoint: 
+         - /bin/bash
+         - -c
+         - |
+            wget -nc -O /minecraft/server.jar https://api.papermc.io/v2/projects/paper/versions/${VERSION}/builds/${BUILD}/downloads/paper-${VERSION}-${BUILD}.jar
+            cat > /minecraft/eula.txt << EOF
+            #By changing the setting below to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula).
+            #Wed Feb 16 14:40:43 IST 2022
+            eula=true
+            EOF
+            java -jar server.jar
+        volumes:
+         - mine-data:/minecraft
+        ports:
+        - 25565:25565
+        restart: unless-stopped
+volumes:
+  mine-data:
