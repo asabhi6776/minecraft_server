@@ -1,4 +1,4 @@
-FROM openjdk:17.0.1-jdk-oraclelinux8
+FROM openjdk:22-oraclelinux8
 
 LABEL maintainer="asabhi6776"
 
@@ -10,7 +10,7 @@ RUN microdnf install wget -y
 
 #COPY ./eula.txt /minecraft
 
-#COPY ./paper-1.19.2-141.jar /minecraft
+COPY ./paper-1.20.1-43.jar /minecraft/server.jar
 
 RUN chmod -R 755 /minecraft
 
