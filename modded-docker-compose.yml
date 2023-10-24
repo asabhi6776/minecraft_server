@@ -1,0 +1,89 @@
+version: "3.8"
+
+services:
+  minecraft:
+    image: itzg/minecraft-server
+    tty: true
+    stdin_open: true
+    ports:
+      - "25565:25565"
+      # Additional port for prometheus to connect on and gather metrics
+      - "9225:9225"
+      # rcon port
+      - "25575:25575"
+    environment:
+      TYPE: SPIGOT
+      # TYPE: "AUTO_CURSEFORGE"
+      # CF_API_KEY: "api-key-here from console.curseforge.com"
+      # CF_PAGE_URL: "https://www.curseforge.com/minecraft/modpacks/all-the-mods-8/files/4633481"
+      # CF_EXCLUDE_MODS: "486778"
+      MEMORY: "5G"
+      MAX_MEMORY: "8G"
+      VERSION: "1.20.1"
+      EULA: "TRUE"
+    volumes:
+      # attach the relative directory 'data' to the container's /data path
+      - C:\Users\abhis\OneDrive\Desktop\minecraft\mcdata:/data
+    restart: on-failure:3
+    # The docker networks configuration for the minecraft service
+    networks:
+      # The name of the network to put the minecraft service into
+      minecraft:
+        # A network alias within the docker network to give the minecraft service
+        aliases:
+          - minecraft
+  prometheus:
+    image: bitnami/prometheus
+    tty: true
+    stdin_open: true
+    ports:
+      - "9090:9090"
+    volumes:
+      # The path on your local computer where the prometheus configuration exists mapped to /etc/prometheus/prometheus.yml within the prometheus container
+      - C:\Users\abhis\OneDrive\Desktop\minecraft\prometheus\prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: on-failure:3
+    networks:
+      minecraft:
+        aliases:
+          - prometheus
+  grafana:
+    image: grafana/grafana
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    volumes:
+      # The path on your local computer where the grafana data will be written to mapped to /var/lib/grafana inside the grafana container
+      - C:\Users\abhis\OneDrive\Desktop\minecraft\grafana:/var/lib/grafana
+    restart: on-failure:3
+    networks:
+      minecraft:
+        aliases:
+          - grafana
+  # promtail:
+  #   image: grafana/promtail
+  #   stdin_open: true
+  #   volumes:
+  #     # attach the relative directory 'data' to the container's /data path
+  #     - F:\mcdata\logs:/var/log
+  #   restart: on-failure:3
+  #   networks:
+  #     minecraft:
+  #       aliases:
+  #         - promtail
+  # loki:
+  #   image: grafana/loki
+  #   stdin_open: true
+  #   ports:
+  #     - "3100:3100"
+  #   restart: on-failure:3
+  #   networks:
+  #     minecraft:
+  #       aliases:
+  #         - loki
+
+# Docker network configurations
+networks:
+  # The network to configure
+  minecraft:
+    # The minecraft network will be created if it does not exist
+    name: minecraft
